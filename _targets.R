@@ -7,7 +7,7 @@ options(tidyverse.quiet = TRUE)
 tar_option_set(packages = c("tidyverse", "dataRetrieval")) # Loading tidyverse because we need dplyr, ggplot2, readr, stringr, and purrr
 
 # define NWIS stations of interest and file out paths
-nwis_stn <- c("01427207", "01432160", "01435000", "01436690", "01466500")
+nwis_stn <- c("01427207", "01432160", "01436690", "01466500") # removing "01435000" because it returns an unexpected column name
 fileout_stn <- paste0("1_fetch/out/nwis_", nwis_stn, ".csv")
 nwis_target <- paste0("nwis_", nwis_stn)
 
@@ -36,10 +36,17 @@ p1_targets_list <- list(
     download_nwis_data(site_no = nwis_stn[4], pathout = "1_fetch/out/"),
     format = "file"
   ),
-  
+
+  # combine into one data set
   tar_target(
-    nwis_target[5],
-    download_nwis_data(site_no = nwis_stn[5], pathout = "1_fetch/out/"),
+    site_data,
+    combine_nwis_data("1_fetch/out")
+  ),
+  
+  # grab site info for each site of interest
+  tar_target(
+    site_info_csv,
+    nwis_site_info(fileout = "1_fetch/out/site_info.csv", site_data),
     format = "file"
   )
 

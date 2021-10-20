@@ -1,4 +1,4 @@
-#' @param site_no chr, 8-digit USGS NWIS gage number. Include leading zero.
+#' @param site_no chr, valid 8-digit USGS NWIS gage number. Include leading zero.
 #' @param pathout chr, file path for output `csv` file. Path only; do not include file name.
 #' 
 download_nwis_data <- function(site_no, pathout = '1_fetch/out/'){
@@ -15,9 +15,15 @@ nwis_site_info <- function(fileout, site_data){
 }
 
 #' staging for future function 
-# combine_nwis_data <- function(in_dir){}
-# 
-# 
+#' #' @param in_dir chr, file path where data files are stored
+combine_nwis_data <- function(in_dir){
+  data_files <- list.files(in_dir, pattern = 'nwis') %>% file.path(in_dir, .)
+  data <- lapply(data_files, readr::read_csv)
+  
+  data_out <- dplyr::bind_rows(data)
+}
+
+
 
 download_nwis_site_data <- function(filepath, parameterCd = '00010', startDate="2014-05-01", endDate="2015-05-01"){
 
