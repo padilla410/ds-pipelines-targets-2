@@ -1,4 +1,11 @@
+#' Process NWIS data for plotting
+#'
+#' @param nwis_data upstream `targets` object of raw data
+#'
+#'
 process_data <- function(nwis_data){
+  # rename default NWIS parameterCd names into human-readable format
+  # and remove parameter code columns
   nwis_data_clean <- rename(nwis_data, water_temperature = X_00010_00000) %>% 
     select(-agency_cd, -X_00010_00000_cd, -tz_cd)
   
