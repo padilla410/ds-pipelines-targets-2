@@ -1,16 +1,3 @@
-#' Download NWIS data
-#' 
-#' Download data from National Water Information System 
-#' 
-#' @param site_no chr, valid 8-digit USGS NWIS gage number. Include leading zero.
-#' @param pathout chr, file path for output `csv` file. Path only; do not include file name.
-#' 
-download_nwis_data <- function(site_no, pathout = '1_fetch/out/'){
-  download_file <- paste(pathout, "/nwis_", site_no, ".csv", sep = "")
-  download_nwis_site_data(download_file, parameterCd = '00010')
-  return(download_file)
-}
-
 #' Download NWIS site data
 #' 
 #' Download site metadata from NWIS

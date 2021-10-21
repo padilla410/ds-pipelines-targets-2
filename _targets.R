@@ -10,40 +10,34 @@ p1_targets_list <- list(
   # download data
   tar_target(
     nwis_01427207_csv,
-    download_nwis_data(site_no = "01427207", pathout = "1_fetch/out/"),
+    download_nwis_site_data(filepath = "1_fetch/out/nwis_01427207.csv"),
     format = "file"
   ),
   
   tar_target(
     nwis_01432160_csv,
-    download_nwis_data(site_no = "01432160", pathout = "1_fetch/out/"),
+    download_nwis_site_data(filepath = "1_fetch/out/nwis_01432160.csv"),
     format = "file"
   ),
   
   tar_target(
     nwis_01436690_csv,
-    download_nwis_data(site_no = "01436690", pathout = "1_fetch/out/"),
+    download_nwis_site_data(filepath = "1_fetch/out/nwis_01436690.csv"),
     format = "file"
   ),
   
   tar_target(
     nwis_01466500_csv,
-    download_nwis_data(site_no = "01466500", pathout = "1_fetch/out/"),
+    download_nwis_site_data(filepath = "1_fetch/out/nwis_01466500.csv"),
     format = "file"
   ),
 
-  # combine data targets
-  tar_target(in_files,
-             c(nwis_01427207_csv,
-               nwis_01432160_csv,
-               nwis_01436690_csv,
-               nwis_01466500_csv),
-             format = "file"),
-  
-  # combine into one data set
+  # combine each location into one target
   tar_target(
     site_data,
-    combine_nwis_data(in_files)
+    combine_nwis_data(c(nwis_01427207_csv, nwis_01432160_csv,
+                        nwis_01436690_csv, nwis_01466500_csv)
+                      )
   ),
   
   # grab site info for each site of interest
