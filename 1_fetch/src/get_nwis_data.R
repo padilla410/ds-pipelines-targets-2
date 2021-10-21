@@ -29,11 +29,11 @@ nwis_site_info <- function(fileout, site_data){
 #' 
 #' Combine NWIS data files into one `data.table`
 #' 
-#' @param in_dir chr, file path where downloaded NWIS data files are stored
+#' @param filepath chr, file path where downloaded NWIS data files are stored
 #' 
-combine_nwis_data <- function(in_dir){
-  data_files <- list.files(in_dir, pattern = 'nwis') %>% file.path(in_dir, .)
-  data <- lapply(data_files, readr::read_csv)
+combine_nwis_data <- function(filepath){
+  # data_files <- list.files(in_dir, pattern = 'nwis') %>% file.path(in_dir, .)
+  data <- lapply(filepath, readr::read_csv)
   
   data_out <- dplyr::bind_rows(data)
 }

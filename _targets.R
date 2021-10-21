@@ -7,40 +7,48 @@ options(tidyverse.quiet = TRUE)
 tar_option_set(packages = c("tidyverse", "dataRetrieval")) # Loading tidyverse because we need dplyr, ggplot2, readr, stringr, and purrr
 
 # define NWIS stations of interest and file out paths
-nwis_stn <- c("01427207", "01432160", "01436690", "01466500") # removing "01435000" because it returns an unexpected column name
-fileout_stn <- paste0("1_fetch/out/nwis_", nwis_stn, ".csv")
-nwis_target <- paste0("nwis_", nwis_stn)
+# nwis_stn <- c("01427207", "01432160", "01436690", "01466500") # removing "01435000" because it returns an unexpected column name
+# fileout_stn <- paste0("1_fetch/out/nwis_", nwis_stn, ".csv")
+# nwis_target <- paste0("nwis_", nwis_stn)
 
 p1_targets_list <- list(
   # download data
   tar_target(
-    nwis_target[1],
-    download_nwis_data(site_no = nwis_stn[1], pathout = "1_fetch/out/"),
+    nwis_01427207,
+    download_nwis_data(site_no = "01427207", pathout = "1_fetch/out/"),
     format = "file"
   ),
   
   tar_target(
-    nwis_target[2],
-    download_nwis_data(site_no = nwis_stn[2], pathout = "1_fetch/out/"),
+    nwis_01432160,
+    download_nwis_data(site_no = "01432160", pathout = "1_fetch/out/"),
     format = "file"
   ),
   
   tar_target(
-    nwis_target[3],
-    download_nwis_data(site_no = nwis_stn[3], pathout = "1_fetch/out/"),
+    nwis_01436690,
+    download_nwis_data(site_no = "01436690", pathout = "1_fetch/out/"),
     format = "file"
   ),
   
   tar_target(
-    nwis_target[4],
-    download_nwis_data(site_no = nwis_stn[4], pathout = "1_fetch/out/"),
+    nwis_01466500,
+    download_nwis_data(site_no = "01466500", pathout = "1_fetch/out/"),
     format = "file"
   ),
 
+  # combine data targets
+  tar_target(in_files,
+             c(nwis_01427207,
+               nwis_01432160,
+               nwis_01436690,
+               nwis_01466500),
+             format = "file"),
+  
   # combine into one data set
   tar_target(
     site_data,
-    combine_nwis_data("1_fetch/out")
+    combine_nwis_data(in_files)
   ),
   
   # grab site info for each site of interest
