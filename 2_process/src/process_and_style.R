@@ -7,7 +7,8 @@
 process_data <- function(nwis_data, nwis_site_data, fileout = "2_process/out/nwis_data_clean.csv"){
   # rename default NWIS parameterCd names into human-readable format
   # and remove parameter code columns
-  nwis_data_clean <- rename(nwis_data, water_temperature = X_00010_00000) %>% 
+  site_data <- read_csv(nwis_data)
+  nwis_data_clean <- rename(site_data, water_temperature = X_00010_00000) %>% 
     select(-agency_cd, -X_00010_00000_cd, -tz_cd)
   
   # combine data with site metadata, select columns of interest, 

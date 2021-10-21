@@ -9,41 +9,37 @@ tar_option_set(packages = c("tidyverse", "dataRetrieval")) # Loading tidyverse b
 p1_targets_list <- list(
   # download data
   tar_target(
-    nwis_01427207_csv,
-    download_nwis_site_data(filepath = "1_fetch/out/nwis_01427207.csv"),
-    format = "file"
+    nwis_01427207,
+    download_nwis_site_data(site_num = "01427207")
   ),
   
   tar_target(
-    nwis_01432160_csv,
-    download_nwis_site_data(filepath = "1_fetch/out/nwis_01432160.csv"),
-    format = "file"
+    nwis_01432160,
+    download_nwis_site_data(site_num = "01432160")
   ),
   
   tar_target(
-    nwis_01436690_csv,
-    download_nwis_site_data(filepath = "1_fetch/out/nwis_01436690.csv"),
-    format = "file"
+    nwis_01436690,
+    download_nwis_site_data(site_num = "01436690")
   ),
   
   tar_target(
-    nwis_01466500_csv,
-    download_nwis_site_data(filepath = "1_fetch/out/nwis_01466500.csv"),
-    format = "file"
+    nwis_01466500,
+    download_nwis_site_data(site_num = "01466500")
   ),
 
   # combine each location into one target
   tar_target(
-    site_data,
-    combine_nwis_data(c(nwis_01427207_csv, nwis_01432160_csv,
-                        nwis_01436690_csv, nwis_01466500_csv)
-                      )
+    site_data_csv,
+    combine_nwis_data(list(nwis_01427207, nwis_01432160,
+                        nwis_01436690, nwis_01466500)),
+    format = "file"
   ),
   
   # grab site info for each site of interest
   tar_target(
     site_info_csv,
-    nwis_site_info(fileout = "1_fetch/out/site_info.csv", site_data),
+    nwis_site_info(fileout = "1_fetch/out/site_info.csv", site_data_csv),
     format = "file"
   )
 )
@@ -51,7 +47,7 @@ p1_targets_list <- list(
 p2_targets_list <- list(
   tar_target(
     site_data_clean_csv,
-    process_data(nwis_data = site_data, nwis_site_data = site_info_csv),
+    process_data(nwis_data = site_data_csv, nwis_site_data = site_info_csv),
     format = "file"
   )
 )
