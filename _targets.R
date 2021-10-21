@@ -6,11 +6,6 @@ source("3_visualize/src/plot_timeseries.R")
 options(tidyverse.quiet = TRUE)
 tar_option_set(packages = c("tidyverse", "dataRetrieval")) # Loading tidyverse because we need dplyr, ggplot2, readr, stringr, and purrr
 
-# define NWIS stations of interest and file out paths
-# nwis_stn <- c("01427207", "01432160", "01436690", "01466500") # removing "01435000" because it returns an unexpected column name
-# fileout_stn <- paste0("1_fetch/out/nwis_", nwis_stn, ".csv")
-# nwis_target <- paste0("nwis_", nwis_stn)
-
 p1_targets_list <- list(
   # download data
   tar_target(
