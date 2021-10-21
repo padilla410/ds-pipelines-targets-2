@@ -9,35 +9,35 @@ tar_option_set(packages = c("tidyverse", "dataRetrieval")) # Loading tidyverse b
 p1_targets_list <- list(
   # download data
   tar_target(
-    nwis_01427207,
+    nwis_01427207_csv,
     download_nwis_data(site_no = "01427207", pathout = "1_fetch/out/"),
     format = "file"
   ),
   
   tar_target(
-    nwis_01432160,
+    nwis_01432160_csv,
     download_nwis_data(site_no = "01432160", pathout = "1_fetch/out/"),
     format = "file"
   ),
   
   tar_target(
-    nwis_01436690,
+    nwis_01436690_csv,
     download_nwis_data(site_no = "01436690", pathout = "1_fetch/out/"),
     format = "file"
   ),
   
   tar_target(
-    nwis_01466500,
+    nwis_01466500_csv,
     download_nwis_data(site_no = "01466500", pathout = "1_fetch/out/"),
     format = "file"
   ),
 
   # combine data targets
   tar_target(in_files,
-             c(nwis_01427207,
-               nwis_01432160,
-               nwis_01436690,
-               nwis_01466500),
+             c(nwis_01427207_csv,
+               nwis_01432160_csv,
+               nwis_01436690_csv,
+               nwis_01466500_csv),
              format = "file"),
   
   # combine into one data set
