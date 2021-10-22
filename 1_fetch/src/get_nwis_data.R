@@ -6,7 +6,7 @@
 #' @param site_data_csv upstream `targets` file
 #' 
 nwis_site_info <- function(fileout, site_data_csv){
-  site_data <- readr::read_csv(site_data_csv)
+  site_data <- readr::read_csv(site_data_csv, show_col_types = F)
   
   site_no <- unique(site_data$site_no)
   site_info <- dataRetrieval::readNWISsite(site_no)
